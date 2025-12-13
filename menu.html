@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menulist</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        #menu{
+            background-color: aquamarine;
+            border-radius: 40px;
+            padding:15px;
+            cursor:pointer;
+            margin-top: 20px;
+        }
+        #close{
+            background-color: black;
+            border-radius: 40px;
+            color:white;
+            padding:15px;
+            cursor:pointer;
+        }
+        .menulist{
+            background-color: white;
+            width:500px;
+            height:50%;
+            padding:20px;
+            position: absolute;
+            top:0;
+            left:0;
+            transform:
+            translateX(-100%);
+            transition:all linear 300ms;
+        }
+        .menulist.visible{
+            transform:translateX(0)
+        }
+    </style>
+</head>
+<body>
+    <button id="menu">Menu</button>
+    <div class="menulist">
+        <button id="close">Close</button>
+        <nav>
+            <ul id="menul">
+                <li>
+                    <a href="#">home</a>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li><a href="#">Contact Us</a></li>
+
+            </ul>
+        </nav>
+    </div>
+    <script src="menu.js"></script>
+</body>
+</html>

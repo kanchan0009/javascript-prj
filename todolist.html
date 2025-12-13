@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Todo List App</title>
+<link rel="stylesheet" href="todo.css">
+</head>
+<body>
+
+
+
+<nav class="navbar">
+ <h2 class="logo">MyTodo</h2>
+ <ul class="nav-links">
+   <li><button onclick="showSection('home')">Home</button></li>
+   <li><button onclick="showSection('actions')">Actions</button></li>
+   <li><button onclick="showSection('history')">History</button></li>
+ </ul>
+</nav>
+
+<section id="home" class="section active">
+  <h1>Welcome to Todo App</h1>
+  <p>Manage your tasks efficiently.</p>
+</section>
+
+
+
+<section id="actions" class="section">
+
+
+    <h1>Todo List</h1>
+
+
+    <div class="todo-input">
+
+
+       <input type="text" id="todoInput" placeholder="Enter a task">
+
+
+       <button onclick="addTodo()">Add</button>
+   </div>
+   <ul id="todoList"></ul>
+</section>
+
+
+<section id="history" class="section">
+  <h1>Todo History</h1>
+  <ul id="historyList"></ul>
+</section>
+
+
+<script src="todo.js"></script>
+</body>
+</html>

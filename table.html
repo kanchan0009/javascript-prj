@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table,th,td{
+            border:1px solid white;
+            border-collapse: collapse;
+        }
+        th,td{
+            background: #96D4D4;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    
+    <table style="width:400px"id="table">
+        <caption>Grade Sheet</caption>
+        <tr>
+            <th style="width:30%">Marks Percentage</th>
+            <th> Grade</th>
+            <th> Performance</th>
+            <th>Grade Point</th>
+        </tr>
+        <tr>
+            <td>90 to 100</td>
+            <td>A+</td>
+            <td>Outstanding</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td>80 t0 less than 90</td>
+            <td>A</td>
+            <td>Excellent</td>
+            <td>3.6</td>
+        </tr>
+        <tr>
+            <td>70 to less than 80</td>
+            <td>B+</td>
+            <td>Very Good</td>
+            <td>3.2</td>
+        </tr>
+        <tr>
+            <td>60 to less than 70 </td>
+            <td>B</td>
+            <td>Good</td>
+            <td>2.8</td>
+        </tr>
+        <tr>
+            <td>50 to less then 60</td>
+            <td>C+</td>
+            <td>Satisfactory</td>
+            <td>2.4</td>
+        </tr>
+        <tr>
+            <td>40 to less than 50</td>
+            <td>C</td>
+            <td>Acceptable</td>
+            <td>2.0</td>
+        </tr>
+        <tr>
+            <td>35 to less than 40</td>
+            <td>D</td>
+            <td>Basic</td>
+            <td>1.6</td>
+        </tr>
+        <tr>
+            <td>less than 35</td>
+            <td>NG</td>
+            <td>(Not Graded)</td>
+            <td>-</td>
+        </tr>
+        <form >
+            <label for="marks">Enter the marks you obtain in the exam.</label><br>
+            <input type="number"id="marks"name=number><br><br>
+            <input type="button" id="button"value="Enter">
+        </form>
+    </table>
+    <script src="table.js"></script>
+</body>
+</html>

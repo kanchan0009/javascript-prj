@@ -1,0 +1,83 @@
+body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: linear-gradient(to right, #74ebd5, #acb6e5);
+        margin: 0;
+    }
+    #heading {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 30px;
+    }
+
+    #heading h1 i {
+        font-style: italic;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 15px;
+        width: 350px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+    }
+
+    form:hover {
+        transform: translateY(-5px);
+    }
+
+    h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 12px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        transition: 0.3s;
+        font-size: 16px;
+    }
+
+    input:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0,123,255,0.5);
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    button:hover {
+        background: #0056b3;
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 15px;
+        color: #555;
+        font-size: 14px;
+    }

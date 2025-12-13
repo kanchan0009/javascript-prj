@@ -1,0 +1,85 @@
+* {
+display: inline-block;
+margin-left: 15px;
+}
+
+
+.nav-links button {
+background: none;
+border: none;
+color: white;
+font-size: 16px;
+cursor: pointer;
+}
+
+
+.nav-links button:hover {
+color: #00c3ff;
+}
+
+
+/* Sections */
+.section {
+display: none;
+padding: 30px;
+}
+
+
+.section.active {
+display: block;
+}
+
+
+/* Todo Area */
+.todo-input {
+margin: 20px 0;
+}
+
+
+.todo-input input {
+padding: 8px;
+width: 250px;
+}
+
+
+.todo-input button {
+padding: 8px 12px;
+background: #333;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+
+.todo-input button:hover {
+background: #555;
+}
+
+
+ul {
+list-style: none;
+}
+
+
+li {
+background: white;
+margin: 10px 0;
+padding: 10px;
+display: flex;
+justify-content: space-between;
+border-radius: 5px;
+}
+
+
+li button {
+background: red;
+border: none;
+color: white;
+padding: 5px 8px;
+cursor: pointer;
+}
+
+
+li button:hover {
+background: darkred;
+}

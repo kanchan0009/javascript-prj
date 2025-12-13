@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript Basics Demo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background: #f4f4f4;
+        color: #333;
+    }
+    h1 { color: #007bff; }
+    button {
+        margin: 5px 0;
+        padding: 8px 15px;
+        cursor: pointer;
+    }
+    .box {
+        margin: 10px 0;
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #ccc;
+    }
+</style>
+</head>
+<body>
+
+<h1>JavaScript Basics Demo</h1>
+
+<h2>1. Variables & Data Types</h2>
+<div class="box" id="variables"></div>
+
+<h2>2. Functions</h2>
+<button onclick="greet('Kanchan')">Greet</button>
+
+<h2>3. Conditionals</h2>
+<button onclick="checkAge(18)">Check Age</button>
+
+<h2>4. Loops</h2>
+<button onclick="runLoop()">Run Loop</button>
+<div class="box" id="loopResult"></div>
+
+<h2>5. DOM Manipulation</h2>
+<p id="demoText">Hello! Click the button to change me.</p>
+<button onclick="changeText()">Change Text</button>
+
+<h2>6. Events</h2>
+<button id="hoverBtn">Hover Over Me</button>
+
+<script>
+
+let name = "Kanchan";
+const age = 20;
+let fruits = ["Apple", "Banana", "Mango"];
+let person = {name: "Kanchan", age: 20};
+
+document.getElementById("variables").innerHTML =
+    "Name: " + name + "<br>" +
+    "Age: " + age + "<br>" +
+    "Fruits: " + fruits.join(", ") + "<br>" +
+    "Person: " + person.name + ", " + person.age;
+
+
+function greet(user) {
+    alert("Hello " + user + "!");
+}
+
+function checkAge(age) {
+    if(age >= 18){
+        alert("You are an adult.");
+    } else {
+        alert("You are a minor.");
+    }
+}
+
+function runLoop() {
+    let output = "";
+    for(let i = 1; i <= 5; i++){
+        output += "Number " + i + "<br>";
+    }
+    document.getElementById("loopResult").innerHTML = output;
+}
+
+function changeText() {
+    document.getElementById("demoText").innerHTML = "You changed the text!";
+}
+
+document.getElementById("hoverBtn").addEventListener("mouseover", function(){
+    alert("Mouse is over the button!");
+});
+
+</script>
+</body>
+</html>
