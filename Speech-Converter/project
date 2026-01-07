@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Speech Converter</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .input-section {
+            margin-bottom: 25px;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            margin-bottom: 15px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        textarea:focus {
+            border-color: #667eea;
+        }
+        
+        .controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        select {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            cursor: pointer;
+        }
+        
+        select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f8f9ff;
+            text-align: center;
+            font-weight: 500;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .speaking {
+            color: #667eea;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text to Speech Converter</h1>
+        
+        <div class="input-section">
+            <textarea id="text-input" placeholder="Something you want to hear...">Hello! This is a text to speech converter. Try typing your own message!</textarea>
+        </div>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="voice-select">Select Voice:</label>
+                <select id="voice-select">
+                    <option value="">Loading voices...</option>
+                </select>
+            </div>
+        </div>
+        
+        <button id="speak-btn">
+            Speak Text
+        </button>
+        
+        <div class="status" id="status-text">
+            Ready to convert text to speech
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const textInput = document.getElementById('text-input');
+        const speakBtn = document.getElementById('speak-btn');
+        const voiceSelect = document.getElementById('voice-select');
+        const statusText = document.getElementById('status-text');
+        
+        // Speech variables
+        let voices = [];
+        let currentSpeech = null;
+        
+        // Initialize the app
+        function init() {
+            // Load available voices
+            loadVoices();
+            
+            // If voices aren't loaded yet, wait for them
+            if (speechSynthesis.onvoiceschanged !== undefined) {
+                speechSynthesis.onvoiceschanged = loadVoices;
+            }
+            
+            // Set up button click event
+            speakBtn.addEventListener('click', speakText);
+            
+            // Allow pressing Enter key to speak (Ctrl+Enter for textarea)
+            textInput.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    speakText();
+                }
+            });
+        }
+        
+        // Load available voices
+        function loadVoices() {
+            voices = speechSynthesis.getVoices();
+            voiceSelect.innerHTML = '';
+            
+            if (voices.length === 0) {
+                voiceSelect.innerHTML = '<option value="">No voices available</option>';
+                return;
+            }
+            
+            // Add voices to dropdown
+            voices.forEach((voice, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = `${voice.name} (${voice.lang})`;
+                voiceSelect.appendChild(option);
+            });
+            
+            // Try to select an English voice by default
+            const englishVoiceIndex = voices.findIndex(voice => voice.lang.startsWith('en'));
+            if (englishVoiceIndex !== -1) {
+                voiceSelect.value = englishVoiceIndex;
+            }
+        }
+        
+        // Convert text to speech
+        function speakText() {
+            // Stop any ongoing speech
+            if (currentSpeech) {
+                speechSynthesis.cancel();
+            }
+            
+            const text = textInput.value.trim();
+            
+            if (text === '') {
+                statusText.textContent = "Please enter some text to speak!";
+                statusText.className = 'status';
+                return;
+            }
+            
+            if (voices.length === 0) {
+                statusText.textContent = "No voices available. Please try again.";
+                statusText.className = 'status';
+                return;
+            }
+            
+            // Create a new SpeechSynthesisUtterance
+            currentSpeech = new SpeechSynthesisUtterance();
+            
+            // Set the text
+            currentSpeech.text = text;
+            
+            // Set the selected voice
+            const voiceIndex = parseInt(voiceSelect.value);
+            if (!isNaN(voiceIndex) && voiceIndex >= 0 && voiceIndex < voices.length) {
+                currentSpeech.voice = voices[voiceIndex];
+            }
+            
+            // Set a moderate rate
+            currentSpeech.rate = 1.0;
+            currentSpeech.pitch = 1.0;
+            
+            // Event listeners for the speech
+            currentSpeech.onstart = function() {
+                statusText.textContent = "Speaking...";
+                statusText.className = 'status speaking';
+                speakBtn.textContent = "Stop Speech";
+                speakBtn.style.background = "linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)";
+            };
+            
+            currentSpeech.onend = function() {
+                statusText.textContent = "Finished speaking";
+                statusText.className = 'status';
+                speakBtn.textContent = "Speak Text";
+                speakBtn.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+                currentSpeech = null;
+            };
+            
+            currentSpeech.onerror = function(event) {
+                statusText.textContent = "Error: Could not speak text";
+                statusText.className = 'status';
+                speakBtn.textContent = "Speak Text";
+                speakBtn.style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+                currentSpeech = null;
+            };
+            
+            // Speak the text
+            speechSynthesis.speak(currentSpeech);
+            statusText.textContent = "Starting speech...";
+        }
+        
+        // Initialize when page loads
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
